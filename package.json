@@ -17,10 +17,13 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm-run-all build:css -p watch:css start:react",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:css": "postcss src/styles/index.css -o src/styles/build.css",
+    "start:react": "react-scripts start",
+    "watch:css": "postcss -w src/styles/index.css -o src/styles/build.css"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +42,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "postcss-cli": "^8.1.0",
+    "postcss-preset-env": "^6.7.0",
+    "tailwindcss": "^1.9.6"
   }
 }
