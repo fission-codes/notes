@@ -1,16 +1,19 @@
 import React from 'react';
+import Login from './components/Login';
+import Home from './components/Home';
+import { useAuth } from './hooks';
 
 function App() {
-  return (
-    <div className="flex flex-col min-h-screen">
-      <div className="px-6 flex flex-auto flex-col items-center justify-center py-12 text-center">
-        <h1>Notes</h1>
-        <div className="max-w-xl mt-4 text-gray-300 dark:text-gray-400">
-          Fission Notes is your web native note system
-        </div>
-      </div>
-  </div>
-  );
+  const { state } = useAuth();
+
+  if (state) {
+    if (state?.authenticated) {
+      return <Home />
+    } else {
+      return <Login />
+    }
+  }
+  return <div>Loading...</div>
 }
 
 export default App;
