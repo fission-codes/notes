@@ -1,8 +1,8 @@
-import React from "react";
-import { useAuth } from "../hooks";
+import React from 'react'
+import { useAuth } from '../hooks'
 
 const Login = () => {
-  const { authorise } = useAuth();
+  const { authorise } = useAuth()
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -16,7 +16,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

@@ -1,93 +1,93 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { BaseLink } from "webnative/fs/types";
-import { useAuth } from "../hooks";
-import Sidebar from "./Sidebar";
-import Editor from "./Editor";
+import React, { useCallback, useEffect, useState } from 'react'
+import { BaseLink } from 'webnative/fs/types'
+import { useAuth } from '../hooks'
+import Sidebar from './Sidebar'
+import Editor from './Editor'
 
 const Home = () => {
   const [loading, setLoading] = useState(true)
-  const [notes, setNotes] = useState<BaseLink[]>([]);
-  const [currentNote, setCurrentNote] = useState<BaseLink>();
-  const [content, setContent] = useState<string>("");
+  const [notes, setNotes] = useState<BaseLink[]>([])
+  const [currentNote, setCurrentNote] = useState<BaseLink>()
+  const [content, setContent] = useState<string>('')
 
-  const { fs } = useAuth(); 
+  const { fs } = useAuth()
 
   const listNotes = useCallback(async () => {
-    if (!fs || !fs.appPath) return;
+    if (!fs || !fs.appPath) return
 
     console.log(`📚 listing notes`)
-    const linksObject = await fs.ls(fs.appPath());
-    const links = Object.entries(linksObject);
+    const linksObject = await fs.ls(fs.appPath())
+    const links = Object.entries(linksObject)
     setNotes(
       links.map(([_, link]) => {
-        return link;
+        return link
       })
-    );
+    )
   }, [fs])
 
   const createNote = async () => {
-    if (!fs || !fs.appPath) return;
+    if (!fs || !fs.appPath) return
 
-    console.log(`📝 Creating new note`);
-    let fileName = 'Untitled';
-    let num = 0;
+    console.log(`📝 Creating new note`)
+    let fileName = 'Untitled'
+    let num = 0
     while (await fs.exists(fs.appPath(`${fileName}.md`))) {
-      num++;
-      fileName = `Untitled ${num}`;
+      num++
+      fileName = `Untitled ${num}`
     }
 
     try {
-      await fs.add(fs.appPath(`${fileName}.md`), '');
-      await fs.publish();  
-      await listNotes();
-      setCurrentNote(notes.find(note => note.name === `${fileName}.md`))
+      await fs.add(fs.appPath(`${fileName}.md`), '')
+      await fs.publish()
+      await listNotes()
+      setCurrentNote(notes.find((note) => note.name === `${fileName}.md`))
       setContent('')
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
   }
 
   const loadNote = async (note: BaseLink) => {
-    if (!fs || !fs.appPath) return;
+    if (!fs || !fs.appPath) return
 
     setLoading(true)
-    console.log(`📖 loading file: ${note.name}`);
-    const fileContent = await fs.read(fs.appPath(note.name));
-    setCurrentNote(note);
-    setContent(`${fileContent}`);
+    console.log(`📖 loading file: ${note.name}`)
+    const fileContent = await fs.read(fs.appPath(note.name))
+    setCurrentNote(note)
+    setContent(`${fileContent}`)
     setLoading(false)
-  };
+  }
 
   const saveCurrentNote = async (content: string) => {
-    if (!fs || !fs.appPath || !currentNote) return;
+    if (!fs || !fs.appPath || !currentNote) return
 
-    console.log(`📝 Saving note ${currentNote.name}`);
+    console.log(`📝 Saving note ${currentNote.name}`)
     setLoading(true)
     try {
-      await fs.write(fs.appPath(currentNote.name), content);
-      await fs.publish()  
+      await fs.write(fs.appPath(currentNote.name), content)
+      await fs.publish()
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
     setLoading(false)
   }
 
   useEffect(() => {
     async function loadNotes() {
-      if (!fs || !fs.appPath) return;
+      if (!fs || !fs.appPath) return
 
-      const appPath = fs.appPath();
+      const appPath = fs.appPath()
       if (await fs.exists(appPath)) {
         await listNotes()
       } else {
-        await fs.mkdir(appPath);
-        await fs.publish();
+        await fs.mkdir(appPath)
+        await fs.publish()
       }
       setLoading(false)
     }
 
-    loadNotes();
-  }, [fs, listNotes, setLoading]);
+    loadNotes()
+  }, [fs, listNotes, setLoading])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -95,13 +95,22 @@ const Home = () => {
         <h1>Notes</h1>
       </header>
       <main className="flex flex-auto">
-        <Sidebar notes={notes} current={currentNote} addNote={createNote} loadNote={loadNote} />
+        <Sidebar
+          notes={notes}
+          current={currentNote}
+          addNote={createNote}
+          loadNote={loadNote}
+        />
         {currentNote && (
-          <Editor content={content} saveNote={saveCurrentNote} loading={loading} />
+          <Editor
+            content={content}
+            saveNote={saveCurrentNote}
+            loading={loading}
+          />
         )}
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

@@ -19,7 +19,8 @@
   },
   "scripts": {
     "start": "npm-run-all build:css -p watch:css start:react",
-    "build": "react-scripts build",
+    "build": "npm-run-all build:css build:react",
+    "build:react": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:css": "postcss src/styles/index.css -o src/styles/build.css",
@@ -31,6 +32,10 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
   },
   "browserslist": {
     "production": [
@@ -48,6 +53,7 @@
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^8.2.0",
     "postcss-preset-env": "^6.7.0",
+    "prettier": "^2.1.2",
     "tailwindcss": "^1.9.6"
   }
 }

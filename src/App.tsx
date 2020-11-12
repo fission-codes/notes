@@ -1,10 +1,10 @@
-import React from 'react';
-import Login from './components/Login';
-import Home from './components/Home';
-import { useAuth } from './hooks';
+import React from 'react'
+import Login from './components/Login'
+import Home from './components/Home'
+import { useAuth } from './hooks'
 
 function App() {
-  const { state } = useAuth();
+  const { state } = useAuth()
 
   if (state) {
     if (state?.authenticated) {
@@ -16,4 +16,4 @@ function App() {
   return <div>Loading...</div>
 }
 
-export default App;
+export default App

@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import * as wn from "webnative";
-import FileSystem from "webnative/fs";
+import { useEffect, useState } from 'react'
+import * as wn from 'webnative'
+import FileSystem from 'webnative/fs'
 
 export function useAuth() {
-  const [state, setState] = useState<wn.State>();
-  let fs: FileSystem | undefined;
+  const [state, setState] = useState<wn.State>()
+  let fs: FileSystem | undefined
 
   const authorise = () => {
     if (state) {
-      wn.redirectToLobby(state.permissions);
+      wn.redirectToLobby(state.permissions)
     }
   }
 
@@ -18,22 +18,22 @@ export function useAuth() {
         permissions: {
           app: {
             name: 'Notes',
-            creator: 'walkah'
-          }
-        }
+            creator: 'walkah',
+          },
+        },
       })
-      setState(result);
+      setState(result)
     }
 
-    getState();
-  }, []);
+    getState()
+  }, [])
 
   switch (state?.scenario) {
     case wn.Scenario.AuthSucceeded:
     case wn.Scenario.Continuation:
-      fs = state.fs;
-      break;
+      fs = state.fs
+      break
   }
 
-  return { authorise, fs, state };
-};
+  return { authorise, fs, state }
+}
