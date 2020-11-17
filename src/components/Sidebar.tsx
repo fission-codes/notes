@@ -7,6 +7,8 @@ interface Props {
   current: BaseLink | undefined
   addNote: Function
   loadNote: Function
+  renameNote: Function
+  deleteNote: Function
 }
 
 const Sidebar: React.FC<Props> = (props) => {
@@ -24,7 +26,21 @@ const Sidebar: React.FC<Props> = (props) => {
             key={note.name}
             onClick={() => loadNote(note)}
           >
-            {note.name}
+            <div className="flex group">
+              <span className="flex-auto truncate">{note.name}</span>
+              <span
+                className="opacity-0 group-hover:opacity-100"
+                onClick={() => console.log('rename')}
+              >
+                E
+              </span>
+              <span
+                className="opacity-0 group-hover:opacity-100 ml-5"
+                onClick={() => console.log('delete')}
+              >
+                D
+              </span>
+            </div>
           </li>
         ))}
       </ul>
