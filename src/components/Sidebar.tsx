@@ -1,14 +1,12 @@
 import React from 'react'
-
 import { BaseLink } from 'webnative/fs/types'
+import SidebarLink from './SidebarLink'
 
 interface Props {
   notes: BaseLink[]
   current: BaseLink | undefined
   addNote: Function
   loadNote: Function
-  renameNote: Function
-  deleteNote: Function
 }
 
 const Sidebar: React.FC<Props> = (props) => {
@@ -26,21 +24,7 @@ const Sidebar: React.FC<Props> = (props) => {
             key={note.name}
             onClick={() => loadNote(note)}
           >
-            <div className="flex group">
-              <span className="flex-auto truncate">{note.name}</span>
-              <span
-                className="opacity-0 group-hover:opacity-100"
-                onClick={() => console.log('rename')}
-              >
-                E
-              </span>
-              <span
-                className="opacity-0 group-hover:opacity-100 ml-5"
-                onClick={() => console.log('delete')}
-              >
-                D
-              </span>
-            </div>
+            <SidebarLink note={note} />
           </li>
         ))}
       </ul>

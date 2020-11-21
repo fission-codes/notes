@@ -72,22 +72,6 @@ const Home = () => {
     setLoading(false)
   }
 
-  const renameNote = async (note: BaseLink) => {
-    if (!fs || !fs.appPath || !currentNote) return
-
-    console.log(`➡️ rename ${currentNote.name} to ${note.name}`)
-    setLoading(true)
-    try {
-      await fs.mv(fs.appPath(currentNote.name), fs.appPath(note.name))
-      fs.publish()
-    } catch (e) {
-      console.error(e)
-    }
-    setLoading(false)
-  }
-
-  const deleteNote = async (note: BaseLink) => {}
-
   useEffect(() => {
     async function loadNotes() {
       if (!fs || !fs.appPath) return
@@ -116,8 +100,6 @@ const Home = () => {
           current={currentNote}
           addNote={createNote}
           loadNote={loadNote}
-          renameNote={renameNote}
-          deleteNote={deleteNote}
         />
         {currentNote && (
           <Editor
