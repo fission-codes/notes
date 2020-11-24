@@ -11573,10 +11573,10 @@ webidl-conversions@^6.1.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-6.1.0.tgz#9111b4d7ea80acd40f5270d666621afa78b69514"
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
-webnative@^0.19.12:
-  version "0.19.12"
-  resolved "https://registry.yarnpkg.com/webnative/-/webnative-0.19.12.tgz#4e0f6713266cb18a61cc9ea5735e434886942fe7"
-  integrity sha512-2T/50/7mQXDIBAGEFz9lgbV19yRw3SUo2op55c0kXz3OIVUI97PM7PWLgTxWDjJRAQtLoj44QYsBsOD/G+XavA==
+webnative@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/webnative/-/webnative-0.20.1.tgz#c93176f19a0d281a713bafa55e9ed6b626280aa3"
+  integrity sha512-d07n5Q/MgrjNJqEgTrr6vCse9T2+qQsi10MHgduGLfWCgcP/GJ8bWI/+kWDiMhFjqARh40XQOIY49H8vCfaNIg==
   dependencies:
     base58-universal "^1.0.0"
     borc "^2.1.1"
