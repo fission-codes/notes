@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { BaseLink } from 'webnative/fs/types'
 import { Edit3, Save, Trash } from 'react-feather'
 import { useAuth } from '../hooks'
@@ -8,12 +8,15 @@ interface Props {
 }
 
 const SidebarLink: React.FC<Props> = (props) => {
+  const renameInput = useRef<HTMLInputElement>(null)
   const { note } = props
   const [editMode, setEditMode] = useState(false)
   const { fs } = useAuth()
 
-  const renameNote = async (newName: string) => {
-    if (!fs || !fs.appPath) return
+  const renameNote = async () => {
+    if (!fs || !fs.appPath || !renameInput || !renameInput.current) return
+
+    const newName = renameInput.current.value
 
     console.log(`➡️ rename ${note.name} to ${newName}`)
     try {
@@ -22,13 +25,16 @@ const SidebarLink: React.FC<Props> = (props) => {
     } catch (e) {
       console.error(e)
     }
+    setEditMode(false)
   }
 
   const deleteNote = async (note: BaseLink) => {
     if (!fs || !fs.appPath) return
 
     try {
+      console.log(`🗑 deleting ${note.name}`)
       await fs.rm(fs.appPath(note.name))
+      fs.publish()
     } catch (e) {
       console.error(e)
     }
@@ -38,12 +44,20 @@ const SidebarLink: React.FC<Props> = (props) => {
     <div className="flex group">
       {editMode ? (
         <>
-          <input type="text" defaultValue={note.name} />
+          <span className="flex-auto">
+            <input
+              ref={renameInput}
+              className="w-full px-2"
+              type="text"
+              defaultValue={note.name}
+            />
+          </span>
           <span
+            className="ml-5"
             onClick={async (e) => {
               console.log('save!')
               setEditMode(false)
-              renameNote('')
+              renameNote()
             }}
           >
             <Save />
@@ -51,12 +65,13 @@ const SidebarLink: React.FC<Props> = (props) => {
         </>
       ) : (
         <>
-          <span className="flex-auto truncate">{note.name}</span>
+          <span className="flex-auto px-2 truncate">{note.name}</span>
           <span
             className="opacity-0 group-hover:opacity-100"
             onClick={(e) => {
               e.stopPropagation()
-              setEditMode(true)
+              //setEditMode(true)
+              window.alert('Temporarily disabled')
             }}
           >
             <Edit3 />
