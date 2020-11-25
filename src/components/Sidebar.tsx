@@ -1,6 +1,6 @@
 import React from 'react'
-
 import { BaseLink } from 'webnative/fs/types'
+import SidebarLink from './SidebarLink'
 
 interface Props {
   notes: BaseLink[]
@@ -20,11 +20,11 @@ const Sidebar: React.FC<Props> = (props) => {
       <ul>
         {notes.map((note) => (
           <li
-            className="my-4 hover:bg-gray-200 cursor-pointer px-4 py-1"
+            className="my-4 hover:bg-gray-200 cursor-pointer px-2 py-1"
             key={note.name}
             onClick={() => loadNote(note)}
           >
-            {note.name}
+            <SidebarLink note={note} />
           </li>
         ))}
       </ul>
