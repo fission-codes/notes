@@ -16,7 +16,7 @@
     "react-scripts": "4.0.0",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4",
-    "webnative": "^0.20.3"
+    "webnative": "^0.20.4"
   },
   "scripts": {
     "start": "npm-run-all build:css -p watch:css start:react",

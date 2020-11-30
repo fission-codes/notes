@@ -18,14 +18,14 @@ const SidebarLink: React.FC<Props> = (props) => {
 
     const newName = renameInput.current.value
 
-    console.log(`➡️ rename ${note.name} to ${newName}`)
+    console.log(`➡️ rename ${fs.appPath(note.name)} to ${fs.appPath(newName)}`)
     try {
       await fs.mv(fs.appPath(note.name), fs.appPath(newName))
-      fs.publish()
+      await fs.publish()
+      setEditMode(false)
     } catch (e) {
       console.error(e)
     }
-    setEditMode(false)
   }
 
   const deleteNote = async (note: BaseLink) => {
@@ -55,8 +55,7 @@ const SidebarLink: React.FC<Props> = (props) => {
           <span
             className="ml-5"
             onClick={async (e) => {
-              console.log('save!')
-              setEditMode(false)
+              e.stopPropagation()
               renameNote()
             }}
           >
@@ -70,8 +69,7 @@ const SidebarLink: React.FC<Props> = (props) => {
             className="opacity-0 group-hover:opacity-100"
             onClick={(e) => {
               e.stopPropagation()
-              //setEditMode(true)
-              window.alert('Temporarily disabled')
+              setEditMode(true)
             }}
           >
             <Edit3 />

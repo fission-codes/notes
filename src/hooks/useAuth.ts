@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import * as wn from 'webnative'
 import FileSystem from 'webnative/fs'
 
+wn.setup.debug({ enabled: true })
+
 export function useAuth() {
   const [state, setState] = useState<wn.State>()
   let fs: FileSystem | undefined
