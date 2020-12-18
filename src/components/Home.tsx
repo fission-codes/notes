@@ -92,7 +92,7 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-gray-600 break-all left-0 py-8 px-4 right-0 sticky">
-        <h1>Notes</h1>
+        <h1>📝 Notes</h1>
       </header>
       <main className="flex flex-auto">
         <Sidebar
