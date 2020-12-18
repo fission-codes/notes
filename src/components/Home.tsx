@@ -37,7 +37,8 @@ const Home = () => {
     }
 
     try {
-      await fs.add(fs.appPath(`${fileName}.md`), '')
+      const encoder = new TextEncoder()
+      await fs.add(fs.appPath(`${fileName}.md`), encoder.encode('') as Buffer)
       await fs.publish()
       await listNotes()
       setCurrentNote(notes.find((note) => note.name === `${fileName}.md`))
@@ -64,7 +65,11 @@ const Home = () => {
     console.log(`📝 Saving note ${currentNote.name}`)
     setLoading(true)
     try {
-      await fs.write(fs.appPath(currentNote.name), content)
+      const encoder = new TextEncoder()
+      await fs.write(
+        fs.appPath(currentNote.name),
+        encoder.encode(content) as Buffer
+      )
       await fs.publish()
     } catch (e) {
       console.error(e)
