@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.0.0",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -10,6 +12,8 @@
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "autoprefixer": "^9",
+    "postcss": "^7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-feather": "^2.0.9",
@@ -31,31 +35,20 @@
     "workbox-streams": "^5.1.3"
   },
   "scripts": {
-    "start": "npm-run-all build:css -p watch:css start:react",
-    "build": "npm-run-all build:css build:react",
-    "build:react": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "build:css": "postcss src/styles/index.css -o src/styles/build.css",
-    "start:react": "react-scripts start",
-    "watch:css": "postcss -w src/styles/index.css -o src/styles/build.css"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -63,10 +56,7 @@
     ]
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "postcss-cli": "^8.2.0",
-    "postcss-preset-env": "^6.7.0",
     "prettier": "^2.1.2",
-    "tailwindcss": "^1.9.6"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }
