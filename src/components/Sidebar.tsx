@@ -13,14 +13,14 @@ const Sidebar: React.FC<Props> = (props) => {
   const { notes, addNote, loadNote } = props
 
   return (
-    <div className="w-1/4 bg-gray-100 p-4">
+    <div className="w-1/4 p-4 br">
       <button className="btn" onClick={() => addNote()}>
         Add a note
       </button>
       <ul>
         {notes.map((note) => (
           <li
-            className="my-4 hover:bg-gray-200 cursor-pointer px-2 py-1"
+            className="my-4 hover:bg-gray-700 cursor-pointer px-2 py-1"
             key={note.name}
             onClick={() => loadNote(note)}
           >
