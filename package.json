@@ -60,7 +60,7 @@
     ]
   },
   "devDependencies": {
-    "fission-kit": "git+https://github.com/fission-suite/kit.git#6c432e3a3b63c97378d0c88e42d50a23ad1e29da",
+    "fission-kit": "git+https://github.com/fission-suite/kit.git",
     "prettier": "^2.1.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }

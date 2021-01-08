@@ -5105,9 +5105,9 @@ fission-bloom-filters@^1.4.0:
     seedrandom "^3.0.5"
     xxhashjs "^0.2.2"
 
-"fission-kit@git+https://github.com/fission-suite/kit.git#6c432e3a3b63c97378d0c88e42d50a23ad1e29da":
+"fission-kit@git+https://github.com/fission-suite/kit.git":
   version "0.3.0"
-  resolved "git+https://github.com/fission-suite/kit.git#6c432e3a3b63c97378d0c88e42d50a23ad1e29da"
+  resolved "git+https://github.com/fission-suite/kit.git#e288e738714168bf4c09145f1672b36cf8f2c941"
 
 flat-cache@^2.0.1:
   version "2.0.1"
