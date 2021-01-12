@@ -12,6 +12,6 @@ jobs:
         uses: actions/setup-node@v2
       - run: yarn install
       - run: yarn build
-      - uses: fission-suite/publish-action
+      - uses: fission-suite/publish-action@v1
         with:
           machine_key: ${{ secrets.MACHINE_KEY }}
