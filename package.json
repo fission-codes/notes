@@ -21,7 +21,7 @@
     "react-scripts": "4.0.0",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4",
-    "webnative": "^0.21.1",
+    "webnative": "^0.21.2",
     "workbox-background-sync": "^6.0.2",
     "workbox-broadcast-update": "^6.0.2",
     "workbox-cacheable-response": "^6.0.2",
@@ -45,14 +45,21 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
