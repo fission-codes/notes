@@ -19,13 +19,13 @@ jobs:
         uses: actions/cache@v2
         id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          path: ${{ steps.yarn-cache-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: 📦 Install packages
         run: yarn install
-      - name: 🏗 Building assets
+      - name: 🏗 Build assets
         run: yarn build
       - name: 🚀 Publish to Fission!
         uses: fission-suite/publish-action@v1
