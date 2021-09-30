@@ -36,7 +36,6 @@
   },
   "scripts": {
     "start": "craco start",
-    "prebuild": "npm run prepare",
     "build": "export REACT_APP_GIT_SHA=`git rev-parse --short HEAD` && craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
