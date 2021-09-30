@@ -3,25 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.0.0",
+    "@craco/craco": "^6.3.0",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^14.14.6",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
+    "@testing-library/react": "^12.1.1",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.2",
+    "@types/react": "^17.0.26",
+    "@types/react-dom": "^17.0.9",
     "autoprefixer": "^9",
     "postcss": "^7",
-    "postcss-import": "^12.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-feather": "^2.0.9",
-    "react-scripts": "4.0.0",
+    "react-scripts": "4.0.3",
     "typescript": "^4.0.3",
-    "web-vitals": "^0.2.4",
-    "webnative": "^0.21.2",
+    "web-vitals": "^2.1.0",
+    "webnative": "^0.28.1",
     "workbox-background-sync": "^6.0.2",
     "workbox-broadcast-update": "^6.0.2",
     "workbox-cacheable-response": "^6.0.2",
@@ -36,8 +35,6 @@
     "workbox-streams": "^6.0.2"
   },
   "scripts": {
-    "prepare": "mkdir -p src/styles/fonts && cp node_modules/fission-kit/fonts/**/*.woff2 src/styles/fonts",
-    "prestart": "npm run prepare",
     "start": "craco start",
     "prebuild": "npm run prepare",
     "build": "export REACT_APP_GIT_SHA=`git rev-parse --short HEAD` && craco build",
@@ -67,7 +64,7 @@
     ]
   },
   "devDependencies": {
-    "fission-kit": "git+https://github.com/fission-suite/kit.git",
+    "@fission-suite/kit": "^2.1.0",
     "prettier": "^2.1.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import * as wn from 'webnative'
-import FileSystem from 'webnative/fs'
+import FileSystem from 'webnative/fs/index'
 
 wn.setup.debug({ enabled: true })
 

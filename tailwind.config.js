@@ -1,22 +1,30 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-const kit = require('fission-kit')
+const plugin = require('tailwindcss/plugin')
+const kit = require('@fission-suite/kit')
 
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  purge: [
+    ...kit.tailwindPurgeList(),
+    './src/**/*.{js,jsx,ts,tsx}',
+    './public/index.html',
+  ],
   theme: {
-    colors: {
-      ...kit.dasherizeObjectKeys(kit.colors),
-    },
-    fontFamily: {
-      ...defaultTheme.fontFamily,
+    colors: kit.dasherizeObjectKeys(kit.colors),
+    fontFamily: kit.fonts,
 
-      body: [kit.fonts.body, ...defaultTheme.fontFamily.sans],
-      display: [kit.fonts.display, ...defaultTheme.fontFamily.serif],
-      mono: [kit.fonts.mono, ...defaultTheme.fontFamily.mono],
+    extend: {
+      fontSize: kit.fontSizes,
     },
   },
   variants: {
     opacity: ['group-hover'],
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addBase }) {
+      // this `fontsPath` will be the relative path
+      // to the fonts from the generated stylesheet
+      kit.fontFaces({ fontsPath: './fonts/' }).forEach((fontFace) => {
+        addBase({ '@font-face': fontFace })
+      })
+    }),
+  ],
 }

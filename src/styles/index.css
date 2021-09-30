@@ -1,20 +1,16 @@
-@import 'fission-kit/fonts/body/fontface.css';
-@import 'fission-kit/fonts/display/fontface.css';
-@import 'fission-kit/fonts/mono/fontface.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply font-body min-h-screen text-gray-100;
+  @apply font-body min-h-screen;
   text-rendering: optimizeLegibility;
 }
 
 .btn {
-  @apply border border-gray-600 py-2 px-4 rounded;
+  @apply border border-base-600 py-2 px-4 rounded;
 }
 
 .btn:hover {
-  @apply bg-gray-600 text-white;
+  @apply bg-base-600 text-white;
 }

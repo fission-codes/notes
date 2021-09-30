@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { BaseLink } from 'webnative/fs/types'
+import { BaseLink, BaseLinks } from 'webnative/fs/types'
 import { useAuth } from '../hooks'
 import Sidebar from './Sidebar'
 import Editor from './Editor'
+import * as wn from 'webnative'
 
 const Home = () => {
   const [loading, setLoading] = useState(true)
@@ -16,7 +17,7 @@ const Home = () => {
     if (!fs || !fs.appPath) return
 
     console.log(`📚 listing notes`)
-    const linksObject = await fs.ls(fs.appPath())
+    const linksObject: BaseLinks = await fs.ls(fs.appPath())
     const links = Object.entries(linksObject)
     setNotes(
       links.map(([_, link]) => {
@@ -31,14 +32,17 @@ const Home = () => {
     console.log(`📝 Creating new note`)
     let fileName = 'Untitled'
     let num = 0
-    while (await fs.exists(fs.appPath(`${fileName}.md`))) {
+    while (await fs.exists(fs.appPath(wn.path.file(`${fileName}.md`)))) {
       num++
       fileName = `Untitled ${num}`
     }
 
     try {
       const encoder = new TextEncoder()
-      await fs.add(fs.appPath(`${fileName}.md`), encoder.encode('') as Buffer)
+      await fs.add(
+        fs.appPath(wn.path.file(`${fileName}.md`)),
+        encoder.encode('') as Buffer
+      )
       await fs.publish()
       await listNotes()
       setCurrentNote(notes.find((note) => note.name === `${fileName}.md`))
@@ -53,7 +57,7 @@ const Home = () => {
 
     setLoading(true)
     console.log(`📖 loading file: ${note.name}`)
-    const fileContent = await fs.read(fs.appPath(note.name))
+    const fileContent = await fs.read(fs.appPath(wn.path.file(note.name)))
     setCurrentNote(note)
     setContent(`${fileContent}`)
     setLoading(false)
@@ -67,7 +71,7 @@ const Home = () => {
     try {
       const encoder = new TextEncoder()
       await fs.write(
-        fs.appPath(currentNote.name),
+        fs.appPath(wn.path.file(currentNote.name)),
         encoder.encode(content) as Buffer
       )
       await fs.publish()
@@ -96,8 +100,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="text-2xl bg-gray-600 break-all left-0 py-8 px-4 right-0 sticky">
-        <h1>Notes</h1>
+      <header className="text-2xl bg-base-200 break-all left-0 py-8 px-4 right-0 sticky">
+        <h1 className="tdc-base-300 text-base-500 dark:text-base-400">Notes</h1>
       </header>
       <main className="flex flex-auto">
         <Sidebar
