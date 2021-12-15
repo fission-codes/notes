@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { BaseLink } from 'webnative/fs/types'
 import { Edit3, Save, Trash } from 'react-feather'
-import { useAuth } from '../hooks'
+import { useAuth, notesPath } from '../hooks'
 import * as wn from 'webnative'
 
 interface Props {
@@ -18,17 +18,11 @@ const SidebarLink: React.FC<Props> = (props) => {
     if (!fs || !fs.appPath || !renameInput || !renameInput.current) return
 
     const newName = renameInput.current.value
-
-    console.log(
-      `➡️ rename ${fs.appPath(wn.path.file(note.name))} to ${fs.appPath(
-        wn.path.file(newName)
-      )}`
-    )
+    const fromPath = notesPath(note.name)
+    const toPath = notesPath(newName)
+    console.log(`➡️ rename ${wn.path.toPosix(fromPath)} to ${wn.path.toPosix(toPath)}`)
     try {
-      await fs.mv(
-        fs.appPath(wn.path.file(note.name)),
-        fs.appPath(wn.path.file(newName))
-      )
+      await fs.mv(fromPath, toPath)
       await fs.publish()
       setEditMode(false)
     } catch (e) {
@@ -41,7 +35,7 @@ const SidebarLink: React.FC<Props> = (props) => {
 
     try {
       console.log(`🗑 deleting ${note.name}`)
-      await fs.rm(fs.appPath(wn.path.file(note.name)))
+      await fs.rm(notesPath(note.name))
       fs.publish()
     } catch (e) {
       console.error(e)

@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react'
 import * as wn from 'webnative'
 import FileSystem from 'webnative/fs/index'
+import { FilePath } from 'webnative/path'
 
 wn.setup.debug({ enabled: true })
+
+export const notesDir = wn.path.directory("private", "Documents", "Notes")
+
+export const notesPath = (fileName: string): FilePath => {
+  const filePath = wn.path.file(fileName)
+  return wn.path.combine(notesDir, filePath)
+}
 
 export function useAuth() {
   const [state, setState] = useState<wn.State>()
@@ -22,6 +30,9 @@ export function useAuth() {
             name: 'Notes',
             creator: 'walkah',
           },
+          fs: {
+            private: [wn.path.directory("Documents", "Notes" )],
+          },        
         },
       })
       setState(result)

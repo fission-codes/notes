@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { BaseLink, BaseLinks } from 'webnative/fs/types'
-import { useAuth } from '../hooks'
+import { useAuth, notesDir, notesPath } from '../hooks'
 import Sidebar from './Sidebar'
 import Editor from './Editor'
-import * as wn from 'webnative'
 
 const Home = () => {
   const [loading, setLoading] = useState(true)
@@ -14,10 +13,10 @@ const Home = () => {
   const { fs } = useAuth()
 
   const listNotes = useCallback(async () => {
-    if (!fs || !fs.appPath) return
+    if (!fs) return
 
     console.log(`📚 listing notes`)
-    const linksObject: BaseLinks = await fs.ls(fs.appPath())
+    const linksObject: BaseLinks = await fs.ls(notesDir)
     const links = Object.entries(linksObject)
     setNotes(
       links.map(([_, link]) => {
@@ -27,22 +26,18 @@ const Home = () => {
   }, [fs])
 
   const createNote = async () => {
-    if (!fs || !fs.appPath) return
+    if (!fs) return
 
     console.log(`📝 Creating new note`)
     let fileName = 'Untitled'
     let num = 0
-    while (await fs.exists(fs.appPath(wn.path.file(`${fileName}.md`)))) {
+    while (await fs.exists(notesPath(`${fileName}.md`))) {
       num++
       fileName = `Untitled ${num}`
     }
 
     try {
-      const encoder = new TextEncoder()
-      await fs.add(
-        fs.appPath(wn.path.file(`${fileName}.md`)),
-        encoder.encode('') as Buffer
-      )
+      await fs.add(notesPath(`${fileName}.md`), content)
       await fs.publish()
       await listNotes()
       setCurrentNote(notes.find((note) => note.name === `${fileName}.md`))
@@ -53,27 +48,23 @@ const Home = () => {
   }
 
   const loadNote = async (note: BaseLink) => {
-    if (!fs || !fs.appPath) return
+    if (!fs) return
 
     setLoading(true)
     console.log(`📖 loading file: ${note.name}`)
-    const fileContent = await fs.read(fs.appPath(wn.path.file(note.name)))
+    const fileContent = await fs.read(notesPath(note.name))
     setCurrentNote(note)
     setContent(`${fileContent}`)
     setLoading(false)
   }
 
   const saveCurrentNote = async (content: string) => {
-    if (!fs || !fs.appPath || !currentNote) return
+    if (!fs || !currentNote) return
 
     console.log(`📝 Saving note ${currentNote.name}`)
     setLoading(true)
     try {
-      const encoder = new TextEncoder()
-      await fs.write(
-        fs.appPath(wn.path.file(currentNote.name)),
-        encoder.encode(content) as Buffer
-      )
+      await fs.write(notesPath(currentNote.name), content)
       await fs.publish()
     } catch (e) {
       console.error(e)
@@ -83,13 +74,12 @@ const Home = () => {
 
   useEffect(() => {
     async function loadNotes() {
-      if (!fs || !fs.appPath) return
+      if (!fs) return
 
-      const appPath = fs.appPath()
-      if (await fs.exists(appPath)) {
+      if (await fs.exists(notesDir)) {
         await listNotes()
       } else {
-        await fs.mkdir(appPath)
+        await fs.mkdir(notesDir)
         await fs.publish()
       }
       setLoading(false)
